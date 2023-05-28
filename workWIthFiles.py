@@ -23,6 +23,38 @@ def loadSettings(settingsFile: str) -> dict:
     return settings
 
 
+def loadPrivateKey(privatePem: str):
+    """
+    The function reads the private key from the file
+    :arg privatePem: file name
+    :return: private key
+    """
+    privateKey = None
+    try:
+        with open(privatePem, 'rb') as pemIn:
+            private_bytes = pemIn.read()
+        privateKey = load_pem_private_key(private_bytes, password=None)
+        logging.info(f' Private key read from file {privatePem}')
+    except OSError as err:
+        logging.warning(f' Error when reading a private key from a file {privatePem}\n{err}')
+    return privateKey
+
+
+def loadSymmetricKey(fileName: str) -> bytes:
+    """
+    The function reads the key for symmetric encryption from the file
+    :arg fileName: file name
+    :return: key
+    """
+    try:
+        with open(fileName, mode='rb') as key_file:
+            key = key_file.read()
+        logging.info(f' Symmetric key read from file {fileName}')
+    except OSError as err:
+        logging.warning(f' Error when reading a symmetric key from a file {fileName}\n{err}')
+    return key
+
+
 def saveSymmetricKey(key: bytes, fileName: str) -> None:
     """
     The function stores the key for symmetric encryption
