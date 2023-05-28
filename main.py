@@ -4,11 +4,11 @@ from symmetric import *
 from asymmetric import *
 from workWIthFiles import *
 
-settingsFile = 'settings.json'
+SETTINGSFILE = 'settings.json'
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-set', '--settings', default=settingsFile, type=str,
+    parser.add_argument('-set', '--settings', default=SETTINGSFILE, type=str,
                         help='Allows you to use your own json file with the path'
                              '(Enter path)')
     group = parser.add_mutually_exclusive_group(required=True)
