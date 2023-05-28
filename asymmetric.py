@@ -32,3 +32,19 @@ def encryptAsymmetric(publicKey, text: bytes) -> bytes:
     except OSError as err:
         logging.warning(f' Asymmetric encryption error {err}')
     return encryptedText
+
+
+def decryptAsymmetric(privateKey, text: bytes) -> bytes:
+    """
+    The function decrypts the asymmetrically encrypted text, using the private key
+    :arg text: the encrypted text
+    :arg privateKey: private key
+    :return: decrypted text
+    """
+    try:
+        decryptedText = privateKey.decrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                                                              algorithm=hashes.SHA256(), label=None))
+        logging.info(f' Text encrypted by asymmetric encryption algorithm decrypted')
+    except OSError as err:
+        logging.warning(f' Asymmetric decryption error {err}')
+    return decryptedText
