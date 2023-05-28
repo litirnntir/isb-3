@@ -23,6 +23,21 @@ def loadSettings(settingsFile: str) -> dict:
     return settings
 
 
+def saveSymmetricKey(key: bytes, fileName: str) -> None:
+    """
+    The function stores the key for symmetric encryption
+    :arg key: key
+    :arg fileName: file name of the key
+    :return: None
+    """
+    try:
+        with open(fileName, 'wb') as keyFile:
+            keyFile.write(key)
+        logging.info(f' Symmetric key successfully saved to a file {fileName}')
+    except OSError as err:
+        logging.warning(f' Error when saving symmetric key to a file {fileName}\n{err}')
+
+
 def saveAsymmetricKeys(privateKey, publicKey, privatePem: str, publicPem: str) -> None:
     """
     The function stores the private and public key for asymmetric encryption
