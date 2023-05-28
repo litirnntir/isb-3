@@ -25,6 +25,7 @@ def encryptAsymmetric(publicKey, text: bytes) -> bytes:
     :arg publicKey: public key
     :return: the encrypted text
     """
+    encryptedText = None
     try:
         encryptedText = publicKey.encrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
                                                              algorithm=hashes.SHA256(), label=None))
@@ -41,6 +42,7 @@ def decryptAsymmetric(privateKey, text: bytes) -> bytes:
     :arg privateKey: private key
     :return: decrypted text
     """
+    decryptedText = None
     try:
         decryptedText = privateKey.decrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
                                                               algorithm=hashes.SHA256(), label=None))

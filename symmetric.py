@@ -13,6 +13,7 @@ def generateSymmetricKey(length: int) -> str:
     :arg length: key length
     :return: key
     """
+    key = None
     if length == 128 or length == 192 or length == 256:
         key = os.urandom(int(length / 8))
         logging.info(
@@ -31,6 +32,8 @@ def encryptSymmetric(key: bytes, text: bytes, length: int) -> bytes:
     :arg key: key
     :return: the encrypted text
     """
+    cipherText = None
+    iv = None
     try:
         padder = padding.ANSIX923(length).padder()
         paddedText = padder.update(text) + padder.finalize()
@@ -52,6 +55,7 @@ def decryptSymmetric(key: bytes, cipherText: bytes, length: int) -> bytes:
     :arg key: key
     :return: returns the decrypted text
     """
+    unpaddedText = None
     try:
         cipherText, iv = cipherText[16:], cipherText[:16]
         cipher = Cipher(algorithms.Camellia(key), modes.CBC(iv))
