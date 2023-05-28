@@ -94,3 +94,33 @@ def saveAsymmetricKeys(privateKey, publicKey, privatePem: str, publicPem: str) -
         logging.info(f' The public key was successfully saved to a file {publicPem}')
     except OSError as err:
         logging.warning(f' Error when saving public key to a file {publicPem}\n{err}')
+
+
+def readText(fileName: str) -> bytes:
+    """
+    The function reads a text file
+    :arg fileName: file path
+    :return: the text from the file
+    """
+    try:
+        with open(fileName, mode='rb') as text:
+            text = text.read()
+        logging.info(f' File {fileName} has been read')
+    except OSError as err:
+        logging.warning(f' Error when reading a file {fileName}\n{err}')
+    return text
+
+
+def writeText(text: bytes, fileName: str) -> None:
+    """
+    The function writes text to the file
+    :arg text: text
+    :arg fileName: file path
+    :return: None
+    """
+    try:
+        with open(fileName, mode='wb') as file:
+            file.write(text)
+        logging.info(f' The text is written to a file {fileName}')
+    except OSError as err:
+        logging.warning(f' Error when writing to a file {fileName}\n{err}')
