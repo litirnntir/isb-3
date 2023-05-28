@@ -18,3 +18,17 @@ def generateAsymmetricKeys() -> tuple:
     return privateKey, publicKey
 
 
+def encryptAsymmetric(publicKey, text: bytes) -> bytes:
+    """
+    The function performs asymmetric encryption using the public key
+    :arg text: the text to be encrypted
+    :arg publicKey: public key
+    :return: the encrypted text
+    """
+    try:
+        encryptedText = publicKey.encrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                                                             algorithm=hashes.SHA256(), label=None))
+        logging.info(f' The text is encrypted with an asymmetric encryption algorithm')
+    except OSError as err:
+        logging.warning(f' Asymmetric encryption error {err}')
+    return encryptedText
