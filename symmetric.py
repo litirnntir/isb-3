@@ -7,7 +7,7 @@ logger = logging.getLogger()
 logger.setLevel('INFO')
 
 
-def generateSymmetricKey(length: int) -> str:
+def generate_symmetric_key(length: int) -> str:
     """
     The function generates a symmetric encryption key
     :arg length: key length
@@ -24,7 +24,7 @@ def generateSymmetricKey(length: int) -> str:
     return key
 
 
-def encryptSymmetric(key: bytes, text: bytes, length: int) -> bytes:
+def encrypt_symmetric(key: bytes, text: bytes, length: int) -> bytes:
     """
     The function encrypts the text with the Camellia symmetric encryption algorithm
     :arg length: the length of the key
@@ -32,38 +32,38 @@ def encryptSymmetric(key: bytes, text: bytes, length: int) -> bytes:
     :arg key: key
     :return: the encrypted text
     """
-    cipherText = None
+    cipher_text = None
     iv = None
     try:
         padder = padding.ANSIX923(length).padder()
-        paddedText = padder.update(text) + padder.finalize()
+        padded_text = padder.update(text) + padder.finalize()
         iv = os.urandom(16)
         cipher = Cipher(algorithms.Camellia(key), modes.CBC(iv))
         encryptor = cipher.encryptor()
-        cipherText = encryptor.update(paddedText) + encryptor.finalize()
+        cipher_text = encryptor.update(padded_text) + encryptor.finalize()
         logging.info(f' The text is encrypted with the Camellia symmetric encryption algorithm')
     except OSError as err:
         logging.warning(f' Symmetric encryption error {err}')
-    return iv + cipherText
+    return iv + cipher_text
 
 
-def decryptSymmetric(key: bytes, cipherText: bytes, length: int) -> bytes:
+def decrypt_symmetric(key: bytes, cipher_text: bytes, length: int) -> bytes:
     """
     The function decrypts the symmetric encrypted text
     :arg length: key length
-    :arg cipherText: the encrypted text
+    :arg cipher_text: the encrypted text
     :arg key: key
     :return: returns the decrypted text
     """
-    unpaddedText = None
+    unpadded_text = None
     try:
-        cipherText, iv = cipherText[16:], cipherText[:16]
+        cipher_text, iv = cipher_text[16:], cipher_text[:16]
         cipher = Cipher(algorithms.Camellia(key), modes.CBC(iv))
         decrypt = cipher.decryptor()
-        text = decrypt.update(cipherText) + decrypt.finalize()
+        text = decrypt.update(cipher_text) + decrypt.finalize()
         unpadder = padding.ANSIX923(length).unpadder()
-        unpaddedText = unpadder.update(text) + unpadder.finalize()
+        unpadded_text = unpadder.update(text) + unpadder.finalize()
         logging.info(f' Text encrypted by Camellia symmetric encryption algorithm decrypted')
     except OSError as err:
         logging.warning(f' Symmetric decryption error {err}')
-    return unpaddedText
+    return unpadded_text
