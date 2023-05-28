@@ -70,7 +70,7 @@ def saveSymmetricKey(key: bytes, fileName: str) -> None:
         logging.warning(f' Error when saving symmetric key to a file {fileName}\n{err}')
 
 
-def saveAsymmetricKeys(privateKey, publicKey, privatePem: str, publicPem: str) -> None:
+def saveAsymmetricKey(privateKey, publicKey, privatePem: str, publicPem: str) -> None:
     """
     The function stores the private and public key for asymmetric encryption
     :arg privateKey: private key
