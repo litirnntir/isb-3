@@ -90,7 +90,7 @@ def save_asymmetric_key(private_key, public_key, private_pem: str, public_pem: s
     try:
         with open(public_pem, 'wb') as public_out:
             public_out.write(public_key.public_bytes(encoding=serialization.Encoding.PEM,
-                                                     format=serialization.PublicFormat.SubjectPublic_keyInfo))
+                                                     format=serialization.PublicFormat.SubjectPublicKeyInfo))
         logging.info(f' The public key was successfully saved to a file {public_pem}')
     except OSError as err:
         logging.warning(f' Error when saving public key to a file {public_pem}\n{err}')

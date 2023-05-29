@@ -14,13 +14,12 @@ def generate_symmetric_key(length: int) -> str:
     :return: key
     """
     key = None
-    if length == 128 or length == 192 or length == 256:
+    choices = [128, 192, 256]
+    if length in choices:
         key = os.urandom(int(length / 8))
-        logging.info(
-            ' Symmetric encryption key generated')
+        logging.info(' Symmetric encryption key generated')
     else:
-        logging.info(
-            ' The length of the key is not equal to 128, 192, 256')
+        logging.info(' The length of the key is not in choices: {}'.format(choices))
     return key
 
 
