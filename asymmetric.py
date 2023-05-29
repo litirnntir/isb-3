@@ -6,47 +6,47 @@ logger = logging.getLogger()
 logger.setLevel('INFO')
 
 
-def generateAsymmetricKeys() -> tuple:
+def generate_asymmetric_keys() -> tuple:
     """
     The function generates keys for asymmetric encryption
     :return: private key and public key
     """
     keys = rsa.generate_private_key(public_exponent=65537, key_size=2048)
-    privateKey = keys
-    publicKey = keys.public_key()
+    private_key = keys
+    public_key = keys.public_key()
     logging.info(' Asymmetric encryption keys are generated')
-    return privateKey, publicKey
+    return private_key, public_key
 
 
-def encryptAsymmetric(publicKey, text: bytes) -> bytes:
+def encrypt_asymmetric(public_key, text: bytes) -> bytes:
     """
     The function performs asymmetric encryption using the public key
     :arg text: the text to be encrypted
-    :arg publicKey: public key
+    :arg public_key: public key
     :return: the encrypted text
     """
-    encryptedText = None
+    encrypted_text = None
     try:
-        encryptedText = publicKey.encrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                                                             algorithm=hashes.SHA256(), label=None))
+        encrypted_text = public_key.encrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                                                              algorithm=hashes.SHA256(), label=None))
         logging.info(f' The text is encrypted with an asymmetric encryption algorithm')
     except OSError as err:
         logging.warning(f' Asymmetric encryption error {err}')
-    return encryptedText
+    return encrypted_text
 
 
-def decryptAsymmetric(privateKey, text: bytes) -> bytes:
+def decrypt_asymmetric(private_key, text: bytes) -> bytes:
     """
     The function decrypts the asymmetrically encrypted text, using the private key
     :arg text: the encrypted text
-    :arg privateKey: private key
+    :arg private_key: private key
     :return: decrypted text
     """
-    decryptedText = None
+    decrypted_text = None
     try:
-        decryptedText = privateKey.decrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                                                              algorithm=hashes.SHA256(), label=None))
+        decrypted_text = private_key.decrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                                                               algorithm=hashes.SHA256(), label=None))
         logging.info(f' Text encrypted by asymmetric encryption algorithm decrypted')
     except OSError as err:
         logging.warning(f' Asymmetric decryption error {err}')
-    return decryptedText
+    return decrypted_text
