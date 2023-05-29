@@ -10,7 +10,7 @@ SETTINGS_FILE = 'settings.json'
 
 def generation():
     """
-    The function
+    The function generates a symmetric key
     """
     symmetric_key = generate_symmetric_key(args.generation)
     private_key, public_key = generate_asymmetric_keys()
@@ -23,7 +23,7 @@ def generation():
 
 def encryption():
     """
-    The function
+    The function encrypts the text with the Camellia symmetric encryption algorithm
     """
     private_key = load_private_key(settings['secret_key'])
     cipher_key = load_symmetric_key(settings['symmetric_key'])
@@ -35,7 +35,7 @@ def encryption():
 
 def decryption():
     """
-    The function
+    The function decrypts the symmetric encrypted text
     """
     private_key = load_private_key(settings['secret_key'])
     cipher_key = load_symmetric_key(settings['symmetric_key'])
